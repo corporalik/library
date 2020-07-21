@@ -1,0 +1,25 @@
+version: '2'
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - ./data/db:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: library
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '6000:3306'
+
+  nodejs:
+    build:
+      context: .
+    image: nodejs
+    container_name: nodejs
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db
